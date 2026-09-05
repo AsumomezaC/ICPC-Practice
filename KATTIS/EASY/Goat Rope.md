@@ -27,12 +27,89 @@ Print the minimum distance from the goat’s post to the house, with a relative 
 |3 -4 -3 -1 -1 2|5.0|
 ## Código
 ### [[Python]]
+```python
+x,y,x1,y1,x2,y2 = map(int, input().split())
 
+def isBetweenIncluded(a,b, value):
+    if a>b:
+        maxi,mini = a,b
+    else:
+        maxi,mini = b,a
+    if value>=mini and value <=maxi:
+        return True, 0
+    if value > maxi:
+        return False, value-maxi
+    else:
+        return False, mini-value
+        
+xNBool, xN = isBetweenIncluded(x1,x2,x)
+yNBool, yN = isBetweenIncluded(y1,y2,y)
+
+if xNBool:
+    print(yN)
+elif yNBool:
+    print(xN)
+else:
+    h = ((xN**2)+(yN**2))**(1/2)
+    print(h)
+```
+
+Otra versión (recomendada por la IA)
+```python
+import math
+
+x, y, x1, y1, x2, y2 = map(int, input().split())
+
+min_x, max_x = min(x1, x2), max(x1, x2)
+min_y, max_y = min(y1, y2), max(y1, y2)
+
+dx = max(min_x - x, 0, x - max_x)
+dy = max(min_y - y, 0, y - max_y)
+
+distancia = math.sqrt(dx**2 + dy**2)
+
+print(distancia)
+```
 ### [[C]] o [[C++]]
+Usando la versión mejorada recomendada 
+```c
+#include <stdio.h>
+#include <math.h>
 
+double min(double a, double b){
+    double mini = a < b ? a : b;
+    return mini;
+}
+
+double max(double a, double b){
+    double maxi = a < b ? b : a;
+    return maxi;
+}
+
+int main(void) {
+    // Tu código aquí
+    double x,y,x1,y1,x2,y2;
+    scanf("%lf %lf %lf %lf %lf %lf", &x,&y,&x1, &y1, &x2, &y2);
+    
+    double maxiX,miniX, maxiY, miniY;
+    maxiX = max(x1,x2);
+    maxiY = max(y1, y2);
+    miniX = min(x1,x2);
+    miniY = min(y1, y2);
+    
+    double finalX = max(0,max(x-maxiX,miniX-x));
+    double finalY = max(0,max(y-maxiY,miniY-y));
+    
+    double res = sqrt(pow(finalX,2)+pow(finalY,2));
+    
+    printf("%lf\n", res);
+    
+    return 0;
+}
+```
 ## Explicación
-
+Se debe de detectar cual es la distancia tanto en el eje de las 'x' como en el eje de las 'y' entre el punto donde se encuentra el poste como el punto más cercano de la casa (estos están representados por un conjunto incluyente de valores). Una vez conseguidos se debe de aplicar el [[Teorema de Pitágoras]] para obtener el resultado.
 ## Temas relacionados
-- 
+- [[Funciones Matemáticas - C]]
 ## Link
 [Goat Rope – Kattis, Kattis](https://open.kattis.com/problems/goatrope)
