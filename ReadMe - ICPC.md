@@ -10,7 +10,7 @@ Se empieza en 2–4 y avanza hacia 5–7.
 ### **[Codeforces Gym](https://codeforces.com/gyms/page/1?filterContestType=Official+ACM-ICPC+Contest&order=ID_DESC&searchByProblem=false)*
 Concursos oficiales ICPC — para simular el repechaje de verdad: toma un regional anterior.
 
-> Se programará en C/C++ y Python todos los problemas
+> Se programará en C/C++ y/o Python
 
 Los apuntes y la documentación están bajo CC-BY-NC 4.0.
 El código está bajo la licencia MIT.

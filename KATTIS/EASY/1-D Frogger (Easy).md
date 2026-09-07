@@ -52,15 +52,88 @@ Output two lines. The first line contains a word indicating the fate of the frog
 ## Código
 ### [[Python]]
 ```python
+n,s,m = map(int, input().split())
 
+a = list(map(int, input().split()))
+a.insert(0,0) # se inserta un elemento 0 para que los valores empiezen en 1
+
+visit = [False] * len(a)
+
+count = 0
+
+while True:
+    if s>n:
+        print("right")
+        break
+    if s<1:
+        print("left")
+        break
+    if a[s] == m:
+        print("magic")
+        break
+    if visit[s]:
+        print("cycle")
+        break
+    else:
+        visit[s]=True
+        s+=a[s]
+        count+=1
+        
+print(count)
 ```
 ### [[C]] o [[C++]]
 ```c
+#include <bits/stdc++.h> // agrega todo lo que existe en C y C++ -más trabajo para el compilador pero corre igual de rápido una vez compilado-
+using namespace std; // ahorra el uso de std en funciones estandar
 
+int main(void) {
+    // Tu código aquí
+    int n, s, m;
+    
+    scanf("%d %d %d", &n, &s, &m);
+    int pos[n+1], visit[n+1];
+    for(int i=1; i<=n; i++){
+        cin >> pos[i];
+        visit[i]=0;
+    }
+    
+    int count=0;
+    
+    while(true){
+        if(s>n){
+            puts("right");
+            break;
+        }
+        if (s<1){
+            puts("left");
+            break;
+        }
+        if (pos[s] == m){
+            puts("magic");
+            break;
+        }
+        if (visit[s]){
+            puts("cycle");
+            break;
+        }
+        visit[s]=1;
+        s+=pos[s];
+        count++;
+    }
+    
+    printf("%d\n", count);
+    return 0;
+}
 ```
 ## Explicación
-
+Este se trata de replicar un juego determinístico, es decir, el resultado ya esta planteado y es inamovible independientemente de las acciones del usuario.
+Para resolverlo, debemos de saber que se trata de un tablero finito 1-D, dónde empiezas en una posición 'x' del tablero, y quieres llegar a una posición 'y' (dónde puede ser que 'x' sea igual a 'y', en ese caso ganas recién entrando).
+Como resultado debes de saber a cual de los cuatro resultados posibles llegas y cuantos turnos te demoras:
+- Llegas a la casilla objetivo
+- Caes del mapa: por la derecha o por la izquierda
+- Caes en un ciclo (al ser determinístico y en esta caso depender solo de tu posición, el visitar una casilla ya visitada indica que has caído en un ciclo)
+Siempre que no llegues a un resultado definitivo debes de moverte tantos casillas como indique la casilla (cada casilla aparte de su índice, tiene un número que marca cuanto te debes de mover -así como es el número objetivo que se te da-) hacia la derecha (hacia el infinito positivo), este puede ser negativo, lo que te desplazará a la izquierda (hacia el 0).
 ## Temas relacionados
-- 
+- [[Secuencias - Python]]
 ## Link
 [1-D Frogger (Easy) – Kattis, Kattis](https://open.kattis.com/problems/1dfroggereasy)
